@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
+import HookFrm from "./components/HookFrm";
 
 function App() {
   let item = ["New york", "LA", "Ohio", "Mumbai"];
@@ -212,6 +213,11 @@ function App() {
       <br />
       <br />
       <Form />
+      <br />
+      <br />
+      <br />
+      <br />
+      <HookFrm />
     </div>
   );
 }
