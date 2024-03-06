@@ -8,6 +8,8 @@ import StrictMood from "./components/StrictMood";
 import { produce } from "immer";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
+import ExpandableText from "./components/ExpandableText";
+import Form from "./components/Form";
 
 function App() {
   let item = ["New york", "LA", "Ohio", "Mumbai"];
@@ -155,6 +157,8 @@ function App() {
     });
   };
 
+  console.log(cart);
+
   return (
     <div>
       <ListGroup
@@ -189,8 +193,25 @@ function App() {
       <button onClick={updateHandler}>Practice John State</button>
       {pizza.toppings}
       <button onClick={pizzHandler}> Pizza?</button>
-
       <button onClick={quantityHandler}> Add to Cart</button>
+      <ExpandableText maxChars={10}>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+        corrupti nostrum at, nobis doloribus sed accusantium magni inventore
+        officiis molestiae eaque debitis atque maxime vero placeat quibusdam
+        odio, vitae suscipit corporis quae. Fugit nam reiciendis voluptate
+        accusantium consequuntur explicabo debitis placeat hic iste. Hic sequi
+        voluptate accusantium, minus deleniti ea veritatis, non vero fuga ab
+        accusamus, ullam deserunt at aspernatur distinctio facilis maxime
+        officia sed eaque amet quo? Quo iusto alias porro quos corrupti
+        voluptatem saepe fuga ipsa, omnis dignissimos libero. Nulla expedita
+        quae pariatur modi similique corporis harum facere amet numquam eos est
+        a, corrupti quis exercitationem libero aut.
+      </ExpandableText>
+      <br />
+      <br />
+      <br />
+      <br />
+      <Form />
     </div>
   );
 }
