@@ -5,6 +5,7 @@
     "react-hook-form": "7.43",
     "react-icon": "^1.0.0",
     "react-icons": "^5.0.1",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "tailwind": "^4.0.0"
   }
 }
