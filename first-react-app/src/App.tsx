@@ -5,6 +5,9 @@ import Buttons from "./components/Buttons";
 import { StrictMode, useState } from "react";
 import Like from "./components/Like";
 import StrictMood from "./components/StrictMood";
+import { produce } from "immer";
+import Navbar from "./components/Navbar";
+import Cart from "./components/Cart";
 
 function App() {
   let item = ["New york", "LA", "Ohio", "Mumbai"];
@@ -85,13 +88,72 @@ function App() {
 
   const arrayOfObjectHandler = () => {
     //update -> suppose we have to list that bug 1 is fixed on button press
+    // setBugs(
+    //   bugs.map((value) => (value.id === 1 ? { ...value, fixed: true } : value))
+    // );
+    // Using immer to do the above logic ->
+
     setBugs(
-      bugs.map((value) => (value.id === 1 ? { ...value, fixed: true } : value))
+      produce((draft) => {
+        const bug = draft.find((bug) => bug.id === 1);
+        if (bug) bug.fixed = true;
+      })
     );
   };
   console.log(bugs);
 
   //Array of objects update end
+
+  //**VERY IMPORTANT** -> Sharing State Between Components ->
+
+  const [cartItems, setCartItems] = useState(["Product1", "Product2"]);
+
+  const clearHandler = () => {
+    setCartItems([]);
+  };
+
+  //Upadte exercise 1
+
+  const [game, setGame] = useState({
+    id: 1,
+    player: {
+      name: "John",
+    },
+  });
+
+  const updateHandler = () => {
+    setGame({ ...game, player: { ...game.player, name: "Cena" } });
+  };
+
+  //Update exercise 2
+
+  const [pizza, setPizza] = useState({
+    name: "Spicy Peproni",
+    toppings: ["Mushroom"],
+  });
+
+  const pizzHandler = () => {
+    setPizza({ ...pizza, toppings: [...pizza.toppings, "GingerBread"] });
+  };
+
+  //Update Exercise 3
+
+  const [cart, setCart] = useState({
+    discount: 1,
+    items: [
+      { id: 1, title: "Product1", quantity: 1 },
+      { id: 2, title: "Product2", quantity: 1 },
+    ],
+  });
+
+  const quantityHandler = () => {
+    setCart({
+      ...cart,
+      items: cart.items.map((item) =>
+        item.id === 1 ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    });
+  };
 
   return (
     <div>
@@ -115,7 +177,20 @@ function App() {
       {zip.address.zipCode}
       <button onClick={zipHandler}>City Zip</button>
       <button onClick={arrayHandler}>Array Update</button>
+      {bugs.map((bug) => (
+        <p key={bug.id}>
+          {bug.title} {bug.fixed ? "Fixed" : "New"}
+        </p>
+      ))}
       <button onClick={arrayOfObjectHandler}>Array Of Objects</button>
+      <Navbar cartItemsCount={cartItems.length} />
+      <Cart cartItems={cartItems} onClear={clearHandler} />
+      {game.player.name}
+      <button onClick={updateHandler}>Practice John State</button>
+      {pizza.toppings}
+      <button onClick={pizzHandler}> Pizza?</button>
+
+      <button onClick={quantityHandler}> Add to Cart</button>
     </div>
   );
 }
