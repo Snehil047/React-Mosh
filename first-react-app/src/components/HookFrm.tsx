@@ -1,5 +1,4 @@
-import React, { FormEvent, useRef } from "react";
-import { FieldValue, FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 
 const Form = () => {
   const { register, handleSubmit } = useForm();
@@ -13,7 +12,8 @@ const Form = () => {
           Name
         </label>
         <input
-          {...register("name")}
+          {...(register("name"),
+          { required: true, minLength: 3, maxLength: 30 })}
           id="name"
           type="text"
           className="form-control"
