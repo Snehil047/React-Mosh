@@ -2,7 +2,7 @@ import ListGroup from "./components/ListGroup";
 import "./App.css";
 import Alert from "./components/Alert";
 import Buttons from "./components/Buttons";
-import { StrictMode, useState } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import Like from "./components/Like";
 import StrictMood from "./components/StrictMood";
 import { produce } from "immer";
@@ -14,8 +14,15 @@ import HookFrm from "./components/HookFrm";
 import ExpenseList from "./components/expense-tracker/components/ExpenseList";
 import ExpenseFilter from "./components/expense-tracker/components/ExpenseFilter";
 import ExpenseForm from "./components/expense-tracker/components/ExpenseForm";
+import ProductList from "./components/ProductList";
+import axios from "axios";
 
 export const categories = ["Groceries", "Utilities", "Entertainment"];
+
+interface User {
+  id: number;
+  name: string;
+}
 
 function App() {
   let item = ["New york", "LA", "Ohio", "Mumbai"];
@@ -180,6 +187,17 @@ function App() {
     ? expenses.filter((e) => e.category === selectedCategory)
     : expenses;
 
+  // Axios FETCH DATA (Backend)
+
+  const [users, setUsers] = useState<User[]>([]);
+  useEffect(() => {
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        setUsers(response.data);
+      }, []);
+  });
+
   return (
     <div>
       <ListGroup
@@ -255,6 +273,16 @@ function App() {
         expenses={visibleExpenses}
         onDelete={(id) => setExpenses(expenses.filter((e) => e.id !== id))}
       />
+      <ProductList />
+      <br />
+      <br />
+      <br />
+      <br />
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }
